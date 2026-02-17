@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Mamaila Unveiling</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="login-section">
+        <div class="login-card">
+            <div class="login-header">
+                <span class="memorial-icon">✝</span>
+                <h1>Family Admin</h1>
+                <p>Mamaila Unveiling RSVP Dashboard</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="password">Enter Password</label>
+                    <input type="password" id="password" placeholder="Enter family password" required>
+                </div>
+                <button type="submit" class="login-btn">Access Dashboard</button>
+                <p id="login-error" class="error-message" style="display: none;">Incorrect password. Please try again.</p>
+            </form>
+            
+            <a href="index.html" class="back-link">← Back to Invitation</a>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" style="display: none;">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>📋 RSVP Dashboard</h1>
+                <p>Magret Mamaila Unveiling Ceremony</p>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="back-btn">← View Invitation</a>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <!-- Statistics Cards -->
+            <section class="stats-section">
+                <div class="stat-card total">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-info">
+                        <h3 id="total-rsvps">0</h3>
+                        <p>Total RSVPs</p>
+                    </div>
+                </div>
+                <div class="stat-card attending">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-info">
+                        <h3 id="total-attending">0</h3>
+                        <p>Attending</p>
+                    </div>
+                </div>
+                <div class="stat-card not-attending">
+                    <div class="stat-icon">✗</div>
+                    <div class="stat-info">
+                        <h3 id="total-not-attending">0</h3>
+                        <p>Not Attending</p>
+                    </div>
+                </div>
+                <div class="stat-card guests">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <h3 id="total-guests">0</h3>
+                        <p>Total Guests</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Actions -->
+            <section class="actions-section">
+                <button id="download-csv" class="action-btn csv">
+                    <span>📥</span> Download CSV
+                </button>
+                <button id="download-pdf" class="action-btn pdf">
+                    <span>📄</span> Download PDF
+                </button>
+                <button id="print-list" class="action-btn print">
+                    <span>🖨️</span> Print List
+                </button>
+                <button id="refresh-data" class="action-btn refresh">
+                    <span>🔄</span> Refresh
+                </button>
+                <button id="clear-data" class="action-btn danger">
+                    <span>🗑️</span> Clear All Data
+                </button>
+            </section>
+
+            <!-- RSVP Table -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h2>RSVP List</h2>
+                    <div class="search-filter">
+                        <input type="text" id="search-input" placeholder="Search by name, email, or phone...">
+                        <select id="filter-status">
+                            <option value="all">All RSVPs</option>
+                            <option value="attending">Attending Only</option>
+                            <option value="not-attending">Not Attending Only</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="rsvp-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Guests</th>
+                                <th>Additional Guest</th>
+                                <th>Relationship</th>
+                                <th>Dietary</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rsvp-table-body">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="no-data-message" class="no-data" style="display: none;">
+                    <span>📭</span>
+                    <p>No RSVPs yet. Share your invitation to start receiving responses!</p>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section class="messages-section">
+                <h2>💬 Messages from Guests</h2>
+                <div id="messages-container" class="messages-container">
+                    <!-- Messages will be populated by JavaScript -->
+                </div>
+                <div id="no-messages" class="no-data" style="display: none;">
+                    <span>💬</span>
+                    <p>No messages yet.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>Mamaila Family Unveiling - Admin Dashboard</p>
+            <p>© 2025 All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>⚠️ Confirm Deletion</h3>
+            <p>Are you sure you want to delete this RSVP? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="btn-danger">Yes, Delete</button>
+                <button id="cancel-delete" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear All Confirmation Modal -->
+    <div id="clear-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>⚠️ Clear All Data</h3>
+            <p>Are you sure you want to delete ALL RSVPs? This action cannot be undone.</p>
+            <p class="warning-text">Type "DELETE" to confirm:</p>
+            <input type="text" id="confirm-clear-input" placeholder="Type DELETE">
+            <div class="modal-actions">
+                <button id="confirm-clear" class="btn-danger" disabled>Clear All</button>
+                <button id="cancel-clear" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+</body>
+</html>
